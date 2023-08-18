@@ -78,9 +78,9 @@ function playRound(playerSelection) {
 let playerWinCount = 0; 
 let computerWinCount = 0; 
 
-function game() {
-    let userInput = prompt("What do you want to play: ");
-    playRound(userInput, getComputerChoice());
+function game(userInput) {
+    playRound(userInput); 
+
 
     if (playerWon) {
         playerWinCount++; 
@@ -88,34 +88,43 @@ function game() {
         computerWinCount++;
     }
 
-    if (playerWinCount > computerWinCount) {
-        return "You won! With " +  playerWinCount + " points"; 
-    } else {
-        return "You lost! with " + playerWinCount + " points";
+    let output = document.querySelector(".output");
+    output.innerHTML = "You played " + userInput + "<br>";
+    output.innerHTML += "Your score: " + playerWinCount + "<br>";
+    output.innerHTML += "Computer score: " + computerWinCount;
+
+
+    if (playerWinCount == 5) {
+        output.innerHTML = "YOU WON!"
     }
+
+    if (computerWinCount == 5) {
+        output.innerHTML = "YOU LOST!"
+    }
+    
+
+    
 }
-
-
-
 
 const rockBtn = document.querySelector("#rock"); 
 rockBtn.addEventListener("click", function() {
-    game();
-    console.log("Playing rock")
+    game("rock");
+    console.log("Playing rock");
 }); 
 
 const paperBtn = document.querySelector("#paper"); 
 paperBtn.addEventListener("click", function() {
-    playRound("Paper");
-    console.log("Playing paper")
+    game("paper");
+    console.log("Playing paper");
 }); 
 
 const scissorBtn = document.querySelector("#scissor"); 
 scissorBtn.addEventListener("click", function() {
-    playRound("Scissor");
-    console.log("Playing scissor")
+    game("Scissor");
+    console.log("Playing scissor");
 }); 
 
+let output = document.querySelector(".output");
+output.innerHTML = "Your score: " + playerWinCount + "<br>";
+output.innerHTML += "Computer score: " + computerWinCount;
 
-let output = document.querySelector(".output"); 
-output.innerHTML = "Your score: " + playerWinCount;
