@@ -9,19 +9,19 @@ function getComputerChoice() {
 
 let playerWon = false; 
 
-function playRound(playerSelection, computerSelection) {
+function playRound(playerSelection) {
 
+    let computerSelection = getComputerChoice().toLowerCase(); 
     let newPlayerSelection = playerSelection.toLowerCase();
-    let newComputerSelection = computerSelection.toLowerCase(); 
     
     if (newPlayerSelection == "rock") {
 
-        if (newComputerSelection == "scissor") {
+        if (computerSelection == "scissor") {
             playerWon = true; 
             return "You Win! " + playerSelection + " beats " + computerSelection; 
         }
 
-        else if (newComputerSelection == "paper") {
+        else if (computerSelection == "paper") {
             playerWon = false; 
             return "You loose! " + computerSelection + " beats " + playerSelection; 
         }
@@ -34,12 +34,12 @@ function playRound(playerSelection, computerSelection) {
 
     else if (newPlayerSelection == "paper") {
 
-        if (newComputerSelection == "rock") {
+        if (computerSelection == "rock") {
             playerWon = true; 
             return "You Win! " + playerSelection + " beats " + computerSelection; 
         }
 
-        else if (newComputerSelection == "scissor") {
+        else if (computerSelection == "scissor") {
             playerWon = false; 
             return "You loose! " + computerSelection + " beats " + playerSelection; 
         }
@@ -50,12 +50,12 @@ function playRound(playerSelection, computerSelection) {
     }
 
     else {
-        if (newComputerSelection == "paper") {
+        if (computerSelection == "paper") {
             playerWon = true; 
             return "You Win! " + playerSelection + " beats " + computerSelection; 
         }
 
-        else if (newComputerSelection == "scissor") {
+        else if (computerSelection == "scissor") {
             playerWon = false; 
             return "You loose! " + computerSelection + " beats " + playerSelection; 
         }
@@ -75,36 +75,47 @@ function playRound(playerSelection, computerSelection) {
 
 
 
+let playerWinCount = 0; 
+let computerWinCount = 0; 
+
 function game() {
+    let userInput = prompt("What do you want to play: ");
+    playRound(userInput, getComputerChoice());
 
-    let playerWinCount = 0; 
-    let computerWinCount = 0; 
-    
-
-    for (let i = 0; i < 5 ; i++) {
-        let userInput = prompt("What do you want to play: ")
-        playRound(userInput, getComputerChoice())
-
-        if (playerWon) {
-            playerWinCount++; 
-        }
-
-        else {
-            computerWinCount++
-        }
-
-
+    if (playerWon) {
+        playerWinCount++; 
+    } else {
+        computerWinCount++;
     }
 
     if (playerWinCount > computerWinCount) {
-        return "You won! With " +  playerWinCount + " points"
+        return "You won! With " +  playerWinCount + " points"; 
+    } else {
+        return "You lost! with " + playerWinCount + " points";
     }
-
-    else {
-        return "You lost! with " + playerWinCount + " points"
-    }
-
 }
 
 
-console.log(game())
+
+
+const rockBtn = document.querySelector("#rock"); 
+rockBtn.addEventListener("click", function() {
+    game();
+    console.log("Playing rock")
+}); 
+
+const paperBtn = document.querySelector("#paper"); 
+paperBtn.addEventListener("click", function() {
+    playRound("Paper");
+    console.log("Playing paper")
+}); 
+
+const scissorBtn = document.querySelector("#scissor"); 
+scissorBtn.addEventListener("click", function() {
+    playRound("Scissor");
+    console.log("Playing scissor")
+}); 
+
+
+let output = document.querySelector(".output"); 
+output.innerHTML = "Your score: " + playerWinCount;
